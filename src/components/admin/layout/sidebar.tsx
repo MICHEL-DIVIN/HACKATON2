@@ -22,20 +22,12 @@ import {
     BookText,
     LogOut,
     CodeXml,
+    Award,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/auth-context";
-
-const navItems = [
-    { href: "/admin/dashboard", label: "Tableau de bord", icon: LayoutDashboard },
-    { href: "/admin/inscriptions", label: "Inscriptions", icon: Users, badge: "22" },
-    { href: "/admin/projects", label: "Projets & Équipes", icon: FolderKanban },
-    { href: "/admin/announcements", label: "Annonces", icon: Megaphone },
-    { href: "/admin/ai-module", label: "Module IA", icon: Bot },
-    { href: "/admin/monitoring", label: "Monitoring", icon: LineChart },
-    { href: "/admin/past-hackathons", label: "Hackathons Passés", icon: History },
-];
+import { useInscriptions } from "@/context/inscriptions-context";
 
 const bottomNavItems = [
     { href: "/admin/settings", label: "Configuration", icon: Settings },
@@ -45,6 +37,19 @@ const bottomNavItems = [
 export default function AdminSidebar() {
     const pathname = usePathname();
     const { logout } = useAuth();
+    const { inscriptions } = useInscriptions();
+
+    const navItems = [
+        { href: "/admin/dashboard", label: "Tableau de bord", icon: LayoutDashboard },
+        { href: "/admin/inscriptions", label: "Inscriptions", icon: Users, badge: inscriptions.length > 0 ? String(inscriptions.length) : undefined },
+        { href: "/admin/projects", label: "Projets & Équipes", icon: FolderKanban },
+        { href: "/admin/announcements", label: "Annonces", icon: Megaphone },
+        { href: "/admin/results", label: "Résultats", icon: Award },
+        { href: "/admin/ai-module", label: "Module IA", icon: Bot },
+        { href: "/admin/monitoring", label: "Monitoring", icon: LineChart },
+        { href: "/admin/past-hackathons", label: "Hackathons Passés", icon: History },
+    ];
+
 
     return (
         <Sidebar collapsible="icon" side="left" variant="sidebar">

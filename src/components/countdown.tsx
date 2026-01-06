@@ -28,7 +28,6 @@ const Countdown = () => {
       return { months: 0, days: 0, hours: 0, minutes: 0, seconds: 0 };
     };
     
-    // Set initial time on client
     setTimeLeft(calculateTimeLeft());
     
     const timer = setInterval(() => {
@@ -46,26 +45,6 @@ const Countdown = () => {
     { label: 'Secondes', value: timeLeft.seconds },
   ];
   
-  if (!isClient) {
-    // Render a placeholder or nothing on the server
-    // to avoid hydration mismatch.
-    return (
-        <div className="flex justify-center items-start gap-4 md:gap-8">
-            {timeParts.map((part) => (
-                <div key={part.label} className="text-center w-20 md:w-28">
-                    <div 
-                        className="font-headline text-4xl md:text-6xl font-bold text-primary"
-                        style={{textShadow: '0 0 8px hsl(var(--primary)), 0 0 16px hsl(var(--primary) / 0.5)'}}
-                    >
-                        --
-                    </div>
-                    <div className="text-xs md:text-sm text-muted-foreground uppercase tracking-widest mt-1">{part.label}</div>
-                </div>
-            ))}
-        </div>
-    );
-  }
-
   return (
     <div className="flex justify-center items-start gap-2 md:gap-4">
       {timeParts.map((part) => (
@@ -74,7 +53,7 @@ const Countdown = () => {
             className="font-headline text-4xl md:text-6xl font-bold text-primary"
             style={{textShadow: '0 0 8px hsl(var(--primary)), 0 0 16px hsl(var(--primary) / 0.5)'}}
           >
-            {part.value.toString().padStart(2, '0')}
+            {isClient ? part.value.toString().padStart(2, '0') : '00'}
           </div>
           <div className="text-xs md:text-sm text-muted-foreground uppercase tracking-widest mt-1">{part.label}</div>
         </div>

@@ -9,7 +9,7 @@ const RegisterSection = () => {
                 Prêt à construire le futur ?
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-                Réserve ta place au Hackathon 2026. Les places sont limitées. Ne manque pas l'occasion d'innover, d'apprendre et de gagner des prix exceptionnels.
+                Réservez votre place pour le Hackathon 2026. Les places sont limitées. Ne manquez pas l'opportunité d'innover, d'apprendre et de gagner des prix incroyables.
             </p>
         </div>
         <div className="mt-12 max-w-2xl mx-auto">

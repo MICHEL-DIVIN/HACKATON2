@@ -15,14 +15,18 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { useAuth } from "@/context/auth-context";
 import { useState, useEffect } from "react";
+import { useAnnouncements } from "@/context/announcements-context";
 
 export default function AdminHeader() {
     const { logout } = useAuth();
+    const { announcements } = useAnnouncements();
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
         setIsClient(true);
     }, []);
+
+    const unreadNotifications = announcements.length;
 
     return (
         <header className="sticky top-0 z-10 flex h-20 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-4 lg:px-8">
@@ -39,16 +43,19 @@ export default function AdminHeader() {
                     <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon" className="relative">
                             <Bell className="h-5 w-5" />
-                            <Badge className="absolute -top-1 -right-1 h-4 w-4 justify-center p-0 text-[10px]">3</Badge>
+                            {unreadNotifications > 0 && (
+                                <Badge className="absolute -top-1 -right-1 h-4 w-4 justify-center p-0 text-[10px]">{unreadNotifications}</Badge>
+                            )}
                             <span className="sr-only">Notifications</span>
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Notifications</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Nouvelle inscription: Jean Dupont</DropdownMenuItem>
-                        <DropdownMenuItem>Alerte IA: Pic d'activité détecté</DropdownMenuItem>
-                        <DropdownMenuItem>Système: Maintenance prévue</DropdownMenuItem>
+                        {announcements.slice(0, 3).map(announcement => (
+                           <DropdownMenuItem key={announcement.id}>{announcement.title}</DropdownMenuItem>
+                        ))}
+                         {announcements.length === 0 && <DropdownMenuItem>Aucune nouvelle notification</DropdownMenuItem>}
                     </DropdownMenuContent>
                 </DropdownMenu>
 
@@ -66,7 +73,7 @@ export default function AdminHeader() {
                             <Link href="/admin/settings">Paramètres</Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
-                            <Link href="/admin/monitoring">Logs d'activité</Link>
+                             <Link href="/admin/monitoring">Logs d'activité</Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={logout}>Déconnexion</DropdownMenuItem>

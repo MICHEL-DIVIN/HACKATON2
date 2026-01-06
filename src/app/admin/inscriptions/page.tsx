@@ -32,8 +32,8 @@ export default function InscriptionsPage() {
                             </TableHeader>
                             <TableBody>
                                 {inscriptions.length > 0 ? (
-                                    inscriptions.map((inscription) => (
-                                        <TableRow key={inscription.email}>
+                                    inscriptions.map((inscription, index) => (
+                                        <TableRow key={`${inscription.email}-${index}`}>
                                             <TableCell className="font-medium">{inscription.fullName}</TableCell>
                                             <TableCell>{inscription.email}</TableCell>
                                             <TableCell><Badge variant="outline">{inscription.classe}</Badge></TableCell>

@@ -4,7 +4,8 @@ import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
 import { ChartTooltipContent, ChartContainer, type ChartConfig } from "@/components/ui/chart";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { type Inscription } from "@/components/registration-form";
 
 const chartConfig = {
   cumulees: {
@@ -21,21 +22,43 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const generateInitialData = () => Array.from({ length: 30 }, (_, i) => ({
-    date: `Jour ${i + 1}`,
-    cumulees: Math.floor(Math.random() * (i + 1) * 10 + 50),
-    parJour: Math.floor(Math.random() * 15 + 5),
-    prediction: Math.floor(Math.random() * (i + 1) * 10 + 50) + Math.random() * 20,
-}));
+const generateDataForLastNDays = (inscriptions: Inscription[], days: number) => {
+    const data = Array.from({ length: days }, (_, i) => {
+        const date = new Date();
+        date.setDate(date.getDate() - (days - 1 - i));
+        const dateString = date.toISOString().split('T')[0];
+        return {
+            date: `Jour ${i + 1}`,
+            fullDate: dateString,
+            parJour: 0,
+            cumulees: 0,
+            prediction: 0,
+        };
+    });
 
+    let cumulativeTotal = 0;
+    inscriptions.forEach(inscription => {
+        const inscriptionDate = new Date(inscription.date).toISOString().split('T')[0];
+        const dayData = data.find(d => d.fullDate === inscriptionDate);
+        if (dayData) {
+            dayData.parJour += 1;
+        }
+    });
 
-export default function InscriptionsChart() {
-    const [chartData, setChartData] = useState<ReturnType<typeof generateInitialData>>([]);
+    data.forEach((d, index) => {
+        if (index > 0) {
+            cumulativeTotal += data[index-1].parJour;
+        }
+        d.cumulees = cumulativeTotal + d.parJour;
+        // Simple prediction logic
+        d.prediction = d.cumulees * (1 + (index/days) * 0.2);
+    });
 
-    useEffect(() => {
-        setChartData(generateInitialData());
-    }, []);
+    return data;
+};
 
+export default function InscriptionsChart({ inscriptions }: { inscriptions: Inscription[] }) {
+    const chartData = useMemo(() => generateDataForLastNDays(inscriptions, 30), [inscriptions]);
 
     return (
         <Card className="bg-card/80 backdrop-blur-sm border-border/20 shadow-lg h-full">
@@ -44,12 +67,6 @@ export default function InscriptionsChart() {
                     <div>
                         <CardTitle>Évolution des Inscriptions</CardTitle>
                         <CardDescription>30 derniers jours</CardDescription>
-                    </div>
-                    <div className="flex gap-2">
-                        <Button variant="outline" size="sm" className="bg-background/50">7J</Button>
-                        <Button variant="outline" size="sm" className="bg-accent text-accent-foreground">30J</Button>
-                        <Button variant="outline" size="sm" className="bg-background/50">3M</Button>
-                        <Button variant="outline" size="sm" className="bg-background/50">Tout</Button>
                     </div>
                 </div>
             </CardHeader>

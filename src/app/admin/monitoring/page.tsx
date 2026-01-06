@@ -12,7 +12,7 @@ const chartConfig = {
 
 const generateChartData = () => {
   return Array.from({ length: 15 }, (_, i) => ({
-    time: `il y a ${i * 2} min`,
+    time: `${i * 2}min ago`,
     cpu: Math.floor(Math.random() * 50 + 10),
     memory: Math.floor(Math.random() * 40 + 20),
   }));
@@ -21,12 +21,12 @@ const generateChartData = () => {
 const generateLogs = () => {
     const levels = ["INFO", "WARN", "ERROR"];
     const messages = [
-        "Authentification utilisateur réussie",
-        "Limite de requêtes API dépassée pour l'endpoint /api/users",
-        "Connexion à la base de données établie",
-        "Nouvelle inscription traitée",
-        "Échec de l'envoi de l'e-mail de notification",
-        "Vérification de l'état du serveur RÉUSSIE",
+        "User authentication successful",
+        "API rate limit exceeded for endpoint /api/users",
+        "Database connection established",
+        "New registration processed",
+        "Failed to send email notification",
+        "Server health check PASSED",
     ];
     return Array.from({length: 10}, () => {
         const level = levels[Math.floor(Math.random() * levels.length)];
@@ -71,7 +71,7 @@ export default function MonitoringPage() {
                             <span className="text-green-400 text-xs font-bold">● Opérationnel</span>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-2xl font-bold">Stable</div>
+                            <div className="text-2xl font-bold">Healthy</div>
                             <p className="text-xs text-muted-foreground">Dernier check il y a 30s</p>
                         </CardContent>
                     </Card>

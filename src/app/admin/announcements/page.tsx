@@ -6,31 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { Megaphone, PlusCircle } from "lucide-react";
-
-type Announcement = {
-    id: number;
-    title: string;
-    content: string;
-    date: string;
-}
-
-const initialAnnouncements: Announcement[] = [
-    {
-        id: 1,
-        title: "Bienvenue au Hackathon 2026!",
-        content: "Nous sommes ravis de vous accueillir. Que le meilleur gagne !",
-        date: "2026-01-01",
-    },
-    {
-        id: 2,
-        title: "Rappel : Cérémonie d'ouverture",
-        content: "N'oubliez pas la cérémonie d'ouverture à 9h précises dans l'amphithéâtre principal.",
-        date: "2026-01-01",
-    }
-]
+import { useAnnouncements, type Announcement } from "@/context/announcements-context";
 
 export default function AnnouncementsPage() {
-    const [announcements, setAnnouncements] = useState<Announcement[]>(initialAnnouncements);
+    const { announcements, addAnnouncement } = useAnnouncements();
     const [newTitle, setNewTitle] = useState("");
     const [newContent, setNewContent] = useState("");
 
@@ -42,13 +21,13 @@ export default function AnnouncementsPage() {
             content: newContent,
             date: new Date().toISOString().split('T')[0],
         };
-        setAnnouncements([newAnnouncement, ...announcements]);
+        addAnnouncement(newAnnouncement);
         setNewTitle("");
         setNewContent("");
     }
 
     return (
-        <div className="flex flex-col h-full bg-background">
+        <div className="flex flex-col h-full">
             <div className="flex-1 p-4 md:p-8 space-y-8">
                  <h1 className="text-3xl font-bold font-headline">Annonces</h1>
                 
@@ -81,7 +60,7 @@ export default function AnnouncementsPage() {
 
                     <div className="space-y-4">
                         <h2 className="text-2xl font-semibold font-headline">Annonces récentes</h2>
-                        {announcements.map(announcement => (
+                        {[...announcements].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map(announcement => (
                              <Card key={announcement.id}>
                                 <CardHeader>
                                     <CardTitle className="text-lg">{announcement.title}</CardTitle>

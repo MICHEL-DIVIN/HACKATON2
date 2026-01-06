@@ -19,8 +19,8 @@ const Header = () => {
   }, []);
 
   const navLinks = [
-    { href: "/#about", label: "À propos" },
-    { href: "/#prizes", label: "Récompenses" },
+    { href: "/#about", label: "À Propos" },
+    { href: "/#prizes", label: "Prix" },
     { href: "/results", label: "Résultats" },
   ];
 
@@ -41,7 +41,7 @@ const Header = () => {
           </nav>
           <div className="hidden md:block">
             <Button asChild>
-              <Link href="/#register">S'inscrire maintenant</Link>
+              <Link href="/#register">S'inscrire</Link>
             </Button>
           </div>
           <div className="md:hidden">
@@ -74,7 +74,7 @@ const Header = () => {
                   </nav>
                   <div className="mt-auto pb-4">
                     <Button asChild className="w-full">
-                      <Link href="/#register" onClick={() => setIsMenuOpen(false)}>S'inscrire maintenant</Link>
+                      <Link href="/#register" onClick={() => setIsMenuOpen(false)}>S'inscrire</Link>
                     </Button>
                   </div>
                 </div>

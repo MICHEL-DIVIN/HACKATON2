@@ -29,7 +29,7 @@ import { useInscriptions } from "@/context/inscriptions-context";
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
-    message: "Le nom complet doit contenir au moins 2 caractères.",
+    message: "Le nom complet doit comporter au moins 2 caractères.",
   }),
   email: z.string().email({
     message: "Veuillez saisir une adresse e-mail valide.",
@@ -56,8 +56,7 @@ export default function RegistrationForm() {
 
     function onSubmit(values: z.infer<typeof formSchema>) {
         setIsLoading(true);
-        console.log(values);
-
+        
         // Simulate API call
         setTimeout(() => {
             const newInscription: Inscription = {
@@ -69,7 +68,7 @@ export default function RegistrationForm() {
             setIsLoading(false);
             toast({
                 title: "Inscription réussie ! 🎉",
-                description: "Nous avons bien reçu ton inscription. Vérifie ta boîte mail pour plus de détails.",
+                description: "Nous avons bien reçu votre inscription. Consultez votre e-mail pour plus de détails.",
             });
             form.reset();
         }, 1000);
@@ -78,8 +77,8 @@ export default function RegistrationForm() {
   return (
     <Card className="border-primary/50 border-2 shadow-xl shadow-primary/10">
         <CardHeader>
-            <CardTitle className="font-headline text-2xl">Inscription au Hackathon 2026</CardTitle>
-            <CardDescription>Remplis le formulaire ci-dessous pour participer à l'événement.</CardDescription>
+            <CardTitle className="font-headline text-2xl">S'inscrire au Hackathon 2026</CardTitle>
+            <CardDescription>Remplissez le formulaire ci-dessous pour participer à l'événement.</CardDescription>
         </CardHeader>
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -91,7 +90,7 @@ export default function RegistrationForm() {
                             <FormItem>
                             <FormLabel>Nom complet</FormLabel>
                             <FormControl>
-                                <Input placeholder="Jean Dupont" {...field} />
+                                <Input placeholder="CFI-CIRAS" {...field} />
                             </FormControl>
                             <FormMessage />
                             </FormItem>
@@ -104,7 +103,7 @@ export default function RegistrationForm() {
                             <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                                <Input type="email" placeholder="jean.dupont@exemple.com" {...field} />
+                                <Input type="email" placeholder="cfi-ciras@example.com" {...field} />
                             </FormControl>
                             <FormMessage />
                             </FormItem>
@@ -119,7 +118,7 @@ export default function RegistrationForm() {
                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                     <FormControl>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Sélectionne ta classe" />
+                                        <SelectValue placeholder="Sélectionnez votre classe" />
                                     </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
@@ -142,7 +141,7 @@ export default function RegistrationForm() {
                 <CardFooter>
                     <Button type="submit" className="w-full" disabled={isLoading}>
                         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                        {isLoading ? "Envoi en cours..." : "Envoyer l'inscription"}
+                        {isLoading ? "Envoi en cours..." : "Soumettre l'inscription"}
                     </Button>
                 </CardFooter>
             </form>

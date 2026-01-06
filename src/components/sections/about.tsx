@@ -9,9 +9,9 @@ const CodeBlock = () => (
           <span className="text-purple-400">export default function</span> <span className="text-green-300">Home</span>() {"{"}<br/>
           {"  "}<span className="text-purple-400">return</span> (<br/>
           {"    "}<span className="text-gray-500">&lt;</span><span className="text-green-400">main</span><span className="text-gray-500">&gt;</span><br/>
-          {"      "}<span className="text-gray-500">&lt;</span><span className="text-red-400">Hackathon.Welcome</span><br/>
-          {"        "}<span className="text-blue-300">year</span>={"{"}<span className="text-yellow-300">2026</span>{"}"}<br/>
-          {"        "}<span className="text-blue-300">motto</span>=<span className="text-yellow-300">"Innovate. Create. Collaborate."</span><br/>
+          {"      "}<span className="text-gray-500">&lt;</span><span className="text-red-400">Hackathon.Bienvenue</span><br/>
+          {"        "}<span className="text-blue-300">annee</span>={"{"}<span className="text-yellow-300">2026</span>{"}"}<br/>
+          {"        "}<span className="text-blue-300">devise</span>=<span className="text-yellow-300">"Innover. Créer. Collaborer."</span><br/>
           {"      "}<span className="text-gray-500">/&gt;</span><br/>
           {"    "}<span className="text-gray-500">&lt;/</span><span className="text-green-400">main</span><span className="text-gray-500">&gt;</span><br/>
           {"  "});<br/>
@@ -36,19 +36,19 @@ const AboutSection = () => {
                 <span className="text-primary">100%</span> Créativité
               </h2>
               <p className="mt-4 text-muted-foreground">
-                Hackathon 2026 is not just another competition. It's a melting pot of brilliant minds, a launchpad for groundbreaking ideas, and a celebration of technology's power to solve real-world problems. Whether you're a seasoned developer or a design prodigy, this is your arena.
+                Le Hackathon 2026 n'est pas une simple compétition. C'est un creuset d'esprits brillants, une rampe de lancement pour des idées révolutionnaires et une célébration du pouvoir de la technologie pour résoudre des problèmes du monde réel. Que vous soyez un développeur chevronné ou un prodige du design, voici votre arène.
               </p>
               <ul className="mt-6 space-y-4">
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-6 h-6 text-accent mt-1 shrink-0" />
                   <span>
-                    <strong>Application Web ou Mobile:</strong> Choose your platform, unleash your creativity, and build a fully functional application from scratch.
+                    <strong>Application Web ou Mobile :</strong> Choisissez votre plateforme, libérez votre créativité et construisez une application entièrement fonctionnelle à partir de zéro.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-6 h-6 text-accent mt-1 shrink-0" />
                   <span>
-                    <strong>Un Défi, Une Idée, Une Solution:</strong> Tackle exciting challenges, brainstorm innovative solutions, and bring your vision to life with the support of industry mentors.
+                    <strong>Un Défi, Une Idée, Une Solution :</strong> Relevez des défis passionnants, imaginez des solutions innovantes et donnez vie à votre vision avec le soutien de mentors de l'industrie.
                   </span>
                 </li>
               </ul>

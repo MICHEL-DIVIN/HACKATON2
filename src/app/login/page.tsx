@@ -9,10 +9,10 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from '@/context/auth-context';
 import { CodeXml, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import BackgroundParticles from '@/components/background-particles';
+import AdminBackground from '@/components/admin/layout/admin-background';
 
 export default function LoginPage() {
-    const [email, setEmail] = useState('admin@cficiras.com');
+    const [email, setEmail] = useState('cfi-ciras@example.com');
     const [password, setPassword] = useState('password');
     const [isLoading, setIsLoading] = useState(false);
     const { login } = useAuth();
@@ -43,9 +43,9 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="relative flex items-center justify-center min-h-screen bg-background">
-            <BackgroundParticles />
-            <Card className="w-full max-w-sm z-10 border-primary/50 border-2 shadow-xl shadow-primary/10">
+        <div className="relative flex items-center justify-center min-h-screen bg-transparent">
+            <AdminBackground />
+            <Card data-login-card className="w-full max-w-sm z-10 border-primary/50 border-2 shadow-xl shadow-primary/10 bg-card/80 backdrop-blur-sm">
                 <CardHeader className="text-center">
                     <div className="flex justify-center items-center gap-2 mb-4">
                         <CodeXml className="w-10 h-10 text-primary" />
@@ -61,7 +61,7 @@ export default function LoginPage() {
                             <Input
                                 id="email"
                                 type="email"
-                                placeholder="admin@example.com"
+                                placeholder="cfi-ciras@example.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required

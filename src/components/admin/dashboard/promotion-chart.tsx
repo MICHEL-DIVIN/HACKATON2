@@ -3,23 +3,45 @@
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
 import { ChartTooltipContent, ChartContainer, type ChartConfig } from "@/components/ui/chart";
-
-const data = [
-    { name: 'LIC1', value: 135, fill: 'var(--color-lic1)' },
-    { name: 'LIC2', value: 165, fill: 'var(--color-lic2)' },
-    { name: 'LRT', value: 110, fill: 'var(--color-lrt)' },
-    { name: 'LRT 2', value: 90, fill: 'var(--color-lrt2)' }
-];
+import { useMemo } from "react";
+import { type Inscription } from "@/components/registration-form";
 
 const chartConfig = {
     lic1: { label: "LIC1", color: "hsl(var(--chart-1))" },
     lic2: { label: "LIC2", color: "hsl(var(--chart-2))" },
     lrt: { label: "LRT", color: "hsl(var(--chart-3))" },
     lrt2: { label: "LRT 2", color: "hsl(var(--chart-4))" },
+    other: { label: "Other", color: "hsl(var(--chart-5))" },
 } satisfies ChartConfig
 
-export default function PromotionChart() {
-    const totalParticipants = data.reduce((acc, entry) => acc + entry.value, 0);
+const groupInscriptionsByClasse = (inscriptions: Inscription[]) => {
+    const groups: Record<string, number> = {
+        lic1: 0,
+        lic2: 0,
+        lrt: 0,
+        lrt2: 0,
+        other: 0,
+    };
+
+    inscriptions.forEach(inscription => {
+        const classe = inscription.classe.toLowerCase().replace(/ /g, '');
+        if (classe.includes('lic1')) groups.lic1++;
+        else if (classe.includes('lic2')) groups.lic2++;
+        else if (classe.includes('lrt2')) groups.lrt2++;
+        else if (classe.includes('lrt')) groups.lrt++;
+        else groups.other++;
+    });
+
+    return Object.entries(groups).map(([name, value]) => ({
+        name: chartConfig[name as keyof typeof chartConfig].label,
+        value,
+        fill: `var(--color-${name})`
+    }));
+};
+
+export default function PromotionChart({ inscriptions }: { inscriptions: Inscription[] }) {
+    const data = useMemo(() => groupInscriptionsByClasse(inscriptions), [inscriptions]);
+    const totalParticipants = inscriptions.length;
 
     return (
         <Card className="bg-card/80 backdrop-blur-sm border-border/20 shadow-lg h-full">
@@ -64,10 +86,13 @@ export default function PromotionChart() {
                     </div>
                 </div>
                  <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 text-xs">
-                    {Object.entries(chartConfig).map(([key, config]) => {
-                        const entry = data.find(d => d.name.toLowerCase().replace(' ', '') === key);
+                    {data.filter(d => d.value > 0).map((entry) => {
+                       const configKey = Object.keys(chartConfig).find(key => chartConfig[key as keyof typeof chartConfig].label === entry.name);
+                       if(!configKey) return null;
+                       const config = chartConfig[configKey as keyof typeof chartConfig];
+                       
                         return (
-                            <div key={key} className="flex items-center gap-2">
+                            <div key={entry.name} className="flex items-center gap-2">
                                 <span className="w-3 h-3 rounded-full" style={{ backgroundColor: config.color }}></span>
                                 <span>{config.label} ({entry?.value})</span>
                             </div>

@@ -5,10 +5,13 @@ import { cn } from '@/lib/utils';
 import { InscriptionsProvider } from '@/context/inscriptions-context';
 import { AuthProvider } from '@/context/auth-context';
 import { EventProvider } from '@/context/event-context';
+import { AnnouncementsProvider } from '@/context/announcements-context';
+import { ProjectsProvider } from '@/context/projects-context';
+import { WinnersProvider } from '@/context/winners-context';
 
 export const metadata: Metadata = {
   title: 'Hackathon 2026 | CFI-CIRAS',
-  description: 'The premium, immersive website for Hackathon 2026 by CFI-CIRAS.',
+  description: 'Le site immersif et premium du Hackathon 2026 par CFI-CIRAS.',
 };
 
 export default function RootLayout({
@@ -17,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="fr" className="dark" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -27,11 +30,17 @@ export default function RootLayout({
       </head>
       <body className={cn("font-body antialiased", "min-h-screen bg-background")}>
         <AuthProvider>
-          <InscriptionsProvider>
-            <EventProvider>
-              {children}
-            </EventProvider>
-          </InscriptionsProvider>
+          <EventProvider>
+            <InscriptionsProvider>
+              <AnnouncementsProvider>
+                <ProjectsProvider>
+                  <WinnersProvider>
+                    {children}
+                  </WinnersProvider>
+                </ProjectsProvider>
+              </AnnouncementsProvider>
+            </InscriptionsProvider>
+          </EventProvider>
         </AuthProvider>
         <Toaster />
       </body>

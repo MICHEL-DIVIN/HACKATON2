@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Github, Twitter, Linkedin } from 'lucide-react';
+import { Github, X, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -14,8 +14,8 @@ const Footer = () => {
             <div>
               <h4 className="font-semibold text-sm text-foreground">Navigation</h4>
               <ul className="mt-4 space-y-2">
-                <li><Link href="/#about" className="text-sm text-muted-foreground hover:text-primary transition-colors">À propos</Link></li>
-                <li><Link href="/#prizes" className="text-sm text-muted-foreground hover:text-primary transition-colors">Récompenses</Link></li>
+                <li><Link href="/#about" className="text-sm text-muted-foreground hover:text-primary transition-colors">À Propos</Link></li>
+                <li><Link href="/#prizes" className="text-sm text-muted-foreground hover:text-primary transition-colors">Prix</Link></li>
                 <li><Link href="/admin/dashboard" className="text-sm text-muted-foreground hover:text-primary transition-colors">Admin</Link></li>
               </ul>
             </div>
@@ -27,9 +27,9 @@ const Footer = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-sm text-foreground">Réseaux sociaux</h4>
+              <h4 className="font-semibold text-sm text-foreground">Réseaux</h4>
               <ul className="mt-4 space-y-2">
-                <li><a href="#" className="text-sm text-muted-foreground hover:text-primary flex items-center gap-2"><Twitter className="w-4 h-4" /> Twitter</a></li>
+                <li><a href="#" className="text-sm text-muted-foreground hover:text-primary flex items-center gap-2"><X className="w-4 h-4" /> X (Twitter)</a></li>
                 <li><a href="#" className="text-sm text-muted-foreground hover:text-primary flex items-center gap-2"><Github className="w-4 h-4" /> GitHub</a></li>
                 <li><a href="#" className="text-sm text-muted-foreground hover:text-primary flex items-center gap-2"><Linkedin className="w-4 h-4" /> LinkedIn</a></li>
               </ul>

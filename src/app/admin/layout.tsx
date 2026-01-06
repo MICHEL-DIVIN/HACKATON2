@@ -38,7 +38,7 @@ export default function AdminLayout({
 
   return (
     <SidebarProvider>
-        <div className="relative flex min-h-screen">
+        <div className="relative flex min-h-screen w-full">
             <BackgroundParticles />
             <AdminSidebar />
             <div className="flex flex-col flex-1 z-10">

@@ -1,16 +1,19 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { Loader2 } from 'lucide-react';
 
 interface EventSettings {
     eventName: string;
     eventDate: string;
     registrationsOpen: boolean;
+    registrationGoal: number;
 }
 
 interface EventContextType {
     eventSettings: EventSettings;
     setEventSettings: (settings: EventSettings) => void;
+    loading: boolean;
 }
 
 const EventContext = createContext<EventContextType | undefined>(undefined);
@@ -19,6 +22,7 @@ const initialSettings: EventSettings = {
     eventName: "Hackathon 2026",
     eventDate: "2026-01-01T09:00",
     registrationsOpen: true,
+    registrationGoal: 300,
 };
 
 export const EventProvider = ({ children }: { children: ReactNode }) => {
@@ -29,12 +33,12 @@ export const EventProvider = ({ children }: { children: ReactNode }) => {
         try {
             const storedSettings = localStorage.getItem('event_settings');
             if (storedSettings) {
-                setEventSettingsState(JSON.parse(storedSettings));
+                const parsedSettings = JSON.parse(storedSettings);
+                setEventSettingsState({ ...initialSettings, ...parsedSettings });
             } else {
-                localStorage.setItem('event_settings', JSON.stringify(initialSettings));
+                 localStorage.setItem('event_settings', JSON.stringify(initialSettings));
             }
         } catch (error) {
-            console.error("Failed to parse event settings from localStorage", error);
             localStorage.removeItem('event_settings');
         }
         setLoading(false);
@@ -45,12 +49,8 @@ export const EventProvider = ({ children }: { children: ReactNode }) => {
         setEventSettingsState(newSettings);
     };
 
-    if (loading) {
-        return null; // Or a loading spinner
-    }
-
     return (
-        <EventContext.Provider value={{ eventSettings, setEventSettings }}>
+        <EventContext.Provider value={{ eventSettings, setEventSettings, loading }}>
             {children}
         </EventContext.Provider>
     );

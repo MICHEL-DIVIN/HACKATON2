@@ -13,7 +13,7 @@ const HeroSection = () => {
           <span className="text-primary">&gt;</span> <span className="text-accent">2026</span>
         </h1>
         <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground animate-fade-in-up animation-delay-300">
-          Rejoins les esprits les plus innovants pour construire le futur de la technologie.
+          Rejoignez les esprits les plus innovants pour construire l'avenir de la technologie.
           <br /> Un week-end. Des possibilités infinies.
         </p>
         <div className="mt-8 flex justify-center gap-4 animate-fade-in-up animation-delay-600">
